@@ -41,3 +41,6 @@ config :discuss, Discuss.Repo,
   database: "discuss_dev",
   hostname: "localhost",
   pool_size: 10
+
+# finally, secret config
+import_config "dev.secret.exs"
