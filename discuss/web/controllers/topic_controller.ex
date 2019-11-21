@@ -3,6 +3,8 @@ defmodule Discuss.TopicController do
 
   alias Discuss.Topic
 
+  plug(Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete])
+
   def index(conn, _params) do
     topics = Repo.all(Topic)
     render(conn, "index.html", topics: topics)
@@ -50,7 +52,7 @@ defmodule Discuss.TopicController do
   end
 
   def delete(conn, %{"id" => topic_id}) do
-    topic = Repo.get!(Topic, topic_id) |> Repo.delete!
+    topic = Repo.get!(Topic, topic_id) |> Repo.delete!()
 
     conn
     |> put_flash(:info, "Topic #{topic.title} has flown away!")
